@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { SignIn, SignInButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -18,6 +19,9 @@ const Header = () => {
       path: '/contact'
     }
   ]
+
+  const { user } = useUser();
+
   return (
     <div className='flex justify-between p-5'>
 
@@ -28,7 +32,7 @@ const Header = () => {
       </div>
 
       {/* middle part */}
-      <div className='flex gap-5 items-center'>
+      <div className='flex gap-7 items-center'>
         {itemList.map((item, index) =>
           <Link key={index} href={item.path}>
             <h2 className='text-lg text-black hover:scale-105 transition-all hover:text-primary'>
@@ -38,8 +42,13 @@ const Header = () => {
         )}
       </div>
 
-      {/* get started */}
-      <Button>Get Started</Button>
+      {!user ? (
+        <SignInButton mode='modal'>
+          <Button>Get Started</Button>
+        </SignInButton>
+      ) : (
+        <Link href='/create-new-trip'><Button>Create new Trip</Button></Link>
+      )}
     </div>
   )
 }
