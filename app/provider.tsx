@@ -12,20 +12,20 @@ const Provider = ({
   children: React.ReactNode;
 }>) => {
 
-  const addUser=useMutation(api.user.createUser);
-  const {user}=useUser();
+  const addUser = useMutation(api.user.createUser);
+  const { user } = useUser();
 
-  useEffect(()=>{
-    user&&createUser();
-  },[user])
+  useEffect(() => {
+    user && createUser();
+  }, [user])
 
-  const createUser=async()=>{
+  const createUser = async () => {
     console.log("user called");
-    if(user){
-      const result=await addUser({
-        name:user?.fullName ?? '',
-        email:user?.primaryEmailAddress?.emailAddress ?? '',
-        imageUrl:user?.imageUrl ?? '',
+    if (user) {
+      const result = await addUser({
+        name: user?.fullName ?? '',
+        email: user?.primaryEmailAddress?.emailAddress ?? '',
+        imageUrl: user?.imageUrl ?? '',
       })
       console.log(result);
     }
@@ -33,8 +33,8 @@ const Provider = ({
 
   return (
     <div>
-        <Header/>
-        {children}
+      <Header />
+      {children}
     </div>
   )
 }

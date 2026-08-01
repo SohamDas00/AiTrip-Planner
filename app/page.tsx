@@ -6,8 +6,8 @@ import { Carousal } from "./_component/carousal";
 export default function Home() {
   return (
     <>
-    <Hero/>
-    <Carousal/>
+      <Hero />
+      <Carousal />
     </>
   );
 }
