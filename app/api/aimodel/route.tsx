@@ -25,15 +25,20 @@ Do not ask multiple questions at once, and never ask irrelevant questions.
 If any answer is missing or unclear, politely ask the user to clarify before proceeding.
 Always maintain a conversational, interactive style while asking questions.
 Along wth response also send which ui component to display for generative UI for example 'budget/groupSize/TripDuration/Final) , where Final means AI generating complete final outpur
-Once all required information is collected, generate and return a **strict JSON response only** (no explanations or extra text) with following JSON schema:
+
+
+Every single response MUST be valid JSON.
+
+Return ONLY:
 
 {
-
-resp:'Text Resp',
-
-ui:'budget/groupSize/TripDuration/Final)'
-
+  "resp": "text to show user",
+  "ui": "source|destination|groupSize|budget|TripDuration|interest|special|Final"
 }
+
+For EVERY response, return ONLY a JSON object.
+
+Do not include any text before or after the JSON.
 
 `
 
@@ -43,6 +48,7 @@ export async function POST(req: NextRequest) {
     try {
         const completion = await openai.chat.completions.create({
             model: "openai/gpt-oss-20b:free",
+            response_format: { type: 'json_object' },
             messages: [
                 {
                     role: 'system',
@@ -52,10 +58,35 @@ export async function POST(req: NextRequest) {
             ]
         })
 
-        console.log(completion.choices[0].message)
-        const message = completion.choices[0].message
-        return NextResponse.json(JSON.parse(message.content ?? ''))
+        const content = completion.choices[0].message.content ?? "";
+
+        try {
+            return NextResponse.json(JSON.parse(content));
+        } catch {
+            const start = content.indexOf("{");
+            const end = content.lastIndexOf("}");
+
+            if (start !== -1 && end !== -1) {
+                try {
+                    return NextResponse.json(
+                        JSON.parse(content.slice(start, end + 1))
+                    );
+                } catch { }
+            }
+
+            return NextResponse.json({
+                resp: content,
+                ui: "unknown",
+            });
+        }
     } catch (error) {
-        return NextResponse.json(error);
+        console.error(error);
+
+        return NextResponse.json(
+            {
+                error: error instanceof Error ? error.message : "Unknown error",
+            },
+            { status: 500 }
+        );
     }
 }

@@ -7,31 +7,31 @@ import { useUser } from '@clerk/nextjs'
 import { Globe2, Landmark, Plane, Send } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+export const suggestion = [
+    {
+        title: 'Create New Trip',
+        icon: <Globe2 className='text-blue-400 h-5 w-5' />
+    },
+    {
+        title: 'Inspite me where to go',
+        icon: <Plane className='text-orange-400 h-5 w-5' />
+    },
+    {
+        title: 'Discove Hidden gems',
+        icon: <Landmark className='text-pink-500 h-5 w-5' />
+    },
+    {
+        title: 'Adventure Destination',
+        icon: <Globe2 className='text-green-400 h-5 w-5' />
+    },
+]
+
 const Hero = () => {
 
-    const suggestion = [
-        {
-            title: 'Create New Trip',
-            icon: <Globe2 className='text-blue-400 h-5 w-5' />
-        },
-        {
-            title: 'Inspite me where to go',
-            icon: <Plane className='text-orange-400 h-5 w-5' />
-        },
-        {
-            title: 'Discove Hidden gems',
-            icon: <Landmark className='text-pink-500 h-5 w-5' />
-        },
-        {
-            title: 'Adventure Destination',
-            icon: <Globe2 className='text-green-400 h-5 w-5' />
-        },
-    ]
-
-    const {user}=useUser();
-    const route=useRouter();
-    const onSend=()=>{
-        if(!user){
+    const { user } = useUser();
+    const route = useRouter();
+    const onSend = () => {
+        if (!user) {
             route.push('/sign-in');
             return;
         }
@@ -52,7 +52,7 @@ const Hero = () => {
                         <Textarea
                             placeholder="Create a trip to Paris from New York"
                             className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none ' />
-                        <Button size={'icon'} className='absolute bottom-4 right-4' onClick={()=>onSend()}>
+                        <Button size={'icon'} className='absolute bottom-4 right-4' onClick={() => onSend()}>
                             <Send />
                         </Button>
                     </div>
