@@ -1,5 +1,7 @@
 import React from 'react'
 import Chatbox from './_components/chatbox'
+import { Timeline } from '@/components/ui/timeline'
+import Itinerary from './_components/itinerary'
 
 const CreateNewTrip = () => {
   return (
@@ -8,7 +10,7 @@ const CreateNewTrip = () => {
             <Chatbox/> 
         </div>
         <div>
-            map
+          <Itinerary/>
         </div>
     </div>
   )

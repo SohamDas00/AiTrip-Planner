@@ -121,7 +121,8 @@ Return ONLY valid JSON.
 
         // For now just log it
         console.log("========= GENERATED TRIP =========");
-        console.dir(data, { depth: null });
+        // console.dir(data, { depth: null });
+        console.log(JSON.stringify(data, null, 2));
 
         return NextResponse.json(data);
       } catch (err: any) {
