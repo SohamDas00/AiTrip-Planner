@@ -27,9 +27,44 @@ export type TypeTrip = {
     destination: string,
     duration: string,
     group_size: string,
-    hotels: any,
-    itinerary: any
+    hotels: Hotel[],
+    itinerary: ItineraryDay,
 }
+
+type Hotel = {
+  description: string;
+  geo_coordinates: {
+    latitude:number,
+    longitude:number,
+  };
+  hotel_address: string;
+  hotel_image_url: string;
+  hotel_name: string;
+  price_per_night: string;
+  rating: number;
+};
+
+type Activity = {
+  best_time_to_visit: string;
+  geo_coordinates: {
+    latitude:number,
+    longitude:number,
+  };
+  place_address: string;
+  place_details: string;
+  place_image_url: string;
+  place_name: string;
+  ticket_pricing: string;
+  time_travel_each_location: string;
+};
+
+type ItineraryDay = {
+  activities: Activity[];
+  best_time_to_visit_day: string;
+  day: number;
+  day_plan: string;
+};
+
 
 const Chatbox = () => {
     const [messages, setMessages] = useState<TypeMessage[]>([])
