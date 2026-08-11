@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Timeline } from '@/components/ui/timeline';
-import { Clock, ExternalLink, Star, Ticket, Wallet } from 'lucide-react';
+import { Clock, ExternalLink, Star, Target, Ticket, Wallet } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { title } from 'process';
 import React from 'react'
+import HotelCard from './hotelCard';
+import DaysItinerary from './daysItinerary';
 
 const TRIP_DATA = {
   "budget": "Luxury",
@@ -198,90 +201,19 @@ const Itinerary = () => {
       content: (
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           {TRIP_DATA.hotels.map((hotel, index) => (
-            <div
-              key={index}
-              className="overflow-hidden rounded-2xl border bg-background shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-            >
-              {/* Hotel Image */}
-              <div className="relative h-52 w-full overflow-hidden">
-                <Image
-                  src="/placeholder.jpg"
-                  alt={hotel.hotel_name}
-                  fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-
-              {/* Hotel Details */}
-              <div className="p-5">
-                <h2 className="text-xl font-semibold">
-                  {hotel.hotel_name}
-                </h2>
-
-                <p className="mt-1 text-sm leading-5 text-muted-foreground">
-                  {hotel.hotel_address}
-                </p>
-
-                {/* Price + Rating */}
-                <div className="mt-4 flex items-center justify-between border-t pt-4">
-                  <div className="flex items-center gap-2">
-                    <Wallet className="h-4 w-4 text-green-500" />
-
-                    <span className="font-medium">
-                      {hotel.price_per_night}
-                    </span>
-
-                    <span className="text-sm text-muted-foreground">
-                      / night
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-
-                    <span className="font-medium">
-                      {hotel.rating}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Button */}
-                <Button
-                  variant="outline"
-                  className="mt-5 w-full rounded-xl"
-                >
-                  View Hotel
-                </Button>
-              </div>
-            </div>
+            <HotelCard hotel={hotel}/>
           ))}
         </div>
       ),
     },
-    ...TRIP_DATA?.itinerary.map((dayData) => ({
-      title: `Day ${dayData?.day}`,
+
+    ...TRIP_DATA.itinerary.map((dayData) => ({
+      title: `Day ${dayData.day}`,
+
       content: (
-        <div>
-          <p>Best time :{dayData?.best_time_to_visit_day}</p>
-          {dayData?.activities.map((activity,index)=>(
-            <div key={index}>
-              <Image src={'/placeholder.jpg'} alt='image' height={200} width={300}/>
-              <h2>{activity?.place_name}</h2>
-              <p>{activity?.place_details}</p>
-              <div className='flex gap-2 text-blue-400'>
-                <Ticket/>
-                {activity?.ticket_pricing}
-              </div>
-              <div className='flex gap-2 text-yellow-400'>
-                <Clock/>
-                {activity?.best_time_to_visit}
-              </div>
-              <Button variant={'outline'}  className='flex gap-2 w-full'>View <ExternalLink/></Button>
-            </div>
-          ))}
-        </div>
-      )
-    }))
+        <DaysItinerary dayData={dayData}/>
+      ),
+    })),
   ];
   return (
     <div className="relative w-full h-[75vh] overflow-auto">

@@ -31,7 +31,7 @@ export type TypeTrip = {
     itinerary: ItineraryDay,
 }
 
-type Hotel = {
+export type Hotel = {
   description: string;
   geo_coordinates: {
     latitude:number,
@@ -44,7 +44,7 @@ type Hotel = {
   rating: number;
 };
 
-type Activity = {
+export type Activity = {
   best_time_to_visit: string;
   geo_coordinates: {
     latitude:number,
@@ -58,7 +58,7 @@ type Activity = {
   time_travel_each_location: string;
 };
 
-type ItineraryDay = {
+export type ItineraryDay = {
   activities: Activity[];
   best_time_to_visit_day: string;
   day: number;
