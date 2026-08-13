@@ -12,37 +12,37 @@ type Props = {
     hotel: Hotel,
 }
 
-const photoCache = new Map<string, string | null>();
+// const photoCache = new Map<string, string | null>();
 
 const HotelCard = ({ hotel }: Props) => {
 
-    const [photoUrl, setPhotoUrl] = useState<string>();
+    const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         hotel && GooglePhoto();
     }, [hotel])
 
     const GooglePhoto = async () => {
-        try {
+    try {
+        const result = await axios.post("/api/googlePhoto", {
+            placeName: `${hotel.hotel_name}, ${hotel.hotel_address}`,
+        });
 
-            const cacheKey = `${hotel.hotel_name}, ${hotel.hotel_address}`;
+        console.log("API RESULT:", result.data);
 
-            if (photoCache.has(cacheKey)) {
-                setPhotoUrl(photoCache.get(cacheKey) ?? undefined);
-                return;
-            }
+        const url = result?.data?.photoUrl;
 
-            const result = await axios.post("/api/googlePhoto", {
-                placeName: `${hotel.hotel_name}, ${hotel.hotel_address}`,
-            });
-            
-            const url = result?.data?.photoUrl;
-            photoCache.set(cacheKey, url ?? null);
+        if (typeof url === "string" && url.length > 0) {
             setPhotoUrl(url);
-        } catch (error) {
-            console.log("Photo error:", error);
+        } else {
+            setPhotoUrl(undefined);
         }
+
+    } catch (error) {
+        console.log("Photo error:", error);
+        setPhotoUrl(undefined);
     }
+};
 
     return (
         <div
@@ -50,9 +50,10 @@ const HotelCard = ({ hotel }: Props) => {
         >
             <div className="relative h-52 w-full overflow-hidden">
                 <Image
-                    src={photoUrl || '/placeholder.jpg'}
+                    src={photoUrl || "/placeholder.jpg"}
                     alt={hotel.hotel_name}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-300 hover:scale-105"
                 />
             </div>
