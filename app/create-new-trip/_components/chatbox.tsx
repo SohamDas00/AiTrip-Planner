@@ -14,6 +14,8 @@ import { useMutation, useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from '@clerk/nextjs'
+import { TripContextType } from '@/app/context/tripDetailContext'
+import { useTripDetail } from '@/app/provider'
 
 
 type TypeMessage = {
@@ -28,7 +30,7 @@ export type TypeTrip = {
     duration: string,
     group_size: string,
     hotels: Hotel[],
-    itinerary: ItineraryDay,
+    itinerary: ItineraryDay[],
 }
 
 export type Hotel = {
@@ -72,6 +74,7 @@ const Chatbox = () => {
     const [loading, setLoading] = useState(false);
     const [tripDetails, setTripDetails] = useState<TypeTrip>();
     const [tripGenerated,setTripGenerated]=useState(false);
+    const { setTripDetailInfo } = useTripDetail();
     const { user } = useUser();
     const currentUser = useQuery(
         api.user.getUserByEmail,
@@ -124,7 +127,9 @@ const Chatbox = () => {
                 console.log(tripResult.data);
 
                 setTripDetails(tripResult?.data?.trip_plan)
-
+                
+                setTripDetailInfo(tripResult?.data?.trip_plan)
+                
                 if (!currentUser) {
                     console.log("Current user not loaded");
                     return;

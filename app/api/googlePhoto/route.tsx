@@ -7,7 +7,6 @@ export async function POST(req: NextRequest) {
     const baseURL = "https://places.googleapis.com/v1/places:searchText";
 
     try {
-        // 1. Search for the place using clean, explicit headers
         const result = await axios.post(
             baseURL,
             {
@@ -17,7 +16,7 @@ export async function POST(req: NextRequest) {
                 headers: {
                     "Content-Type": "application/json",
                     "X-Goog-Api-Key": process.env.GOOGLE_PLACE_KEY,
-                    "X-Goog-FieldMask": "places.id,places.displayName,places.photos"
+                    "X-Goog-FieldMask": "places.id,places.displayName,places.photos,places.photos"
                 }
             }
         );
