@@ -24,12 +24,13 @@ const Header = () => {
 
   return (
     <div className='flex justify-between p-5'>
-
       {/* logo */}
-      <div className='flex  gap-2 items-center'>
-        <Image src='logo.svg' alt='logo' width={30} height={30} />
-        <h2 className='font-bold text-2xl'>Ai Trip Planner</h2>
-      </div>
+      <Link href={'/'}>
+        <div className='flex  gap-2 items-center'>
+          <Image src='logo.svg' alt='logo' width={30} height={30} />
+          <h2 className='font-bold text-2xl'>Ai Trip Planner</h2>
+        </div>
+      </Link>
 
       {/* middle part */}
       <div className='flex gap-7 items-center'>

@@ -20,8 +20,7 @@ const Provider = ({
 
   const [userDetails, setUserDetails] = useState<any>();
 
-  const [tripDetailInfo, setTripDetailInfo] =
-    useState<TypeTrip | null>(null);
+  const [tripDetailInfo, setTripDetailInfo] = useState<TypeTrip | null>(null);
 
   useEffect(() => {
     if (user) {

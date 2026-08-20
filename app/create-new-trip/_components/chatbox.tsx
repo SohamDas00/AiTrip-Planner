@@ -170,7 +170,7 @@ const Chatbox = () => {
     }
 
     return (
-        <div className='h-[75vh] flex flex-col'>
+        <div className='h-[75vh] flex flex-col border shadow rounded-2xl p-3'>
             {/* display message */}
             <section className='flex-1 overflow-y-auto p-4'>
                 {messages.length == 0 && <EmptyBox onSelectOption={(value: string) => setUserInput(value)} />}
