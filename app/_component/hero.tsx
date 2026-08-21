@@ -44,7 +44,7 @@ const Hero = () => {
             {/* content */}
             <div className='max-w-3xl w-full text-center space-y-6'>
                 <h1 className='text-xl md:text-5xl font-bold'>Hey, I'm your personal<span className='text-primary'> trip planner</span></h1>
-                <p className='text-gray-500 text-lg'>Tell me what you want, and I'll handle the rest: flight,hotel, itineraries - all in seconds </p>
+                <p className='text-gray-500 text-lg'>Tell me what you want, and I'll handle the rest: flight, hotel, itineraries - all in seconds </p>
 
                 {/* search */}
                 <div>

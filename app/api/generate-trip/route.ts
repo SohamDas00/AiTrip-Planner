@@ -96,9 +96,12 @@ Return ONLY valid JSON.
     ];
 
     let lastError: any = null;
+    let retryAfter = 30;
 
     for (const model of models) {
       try {
+        console.log(`Trying model: ${model}`);
+
         const completion = await openai.chat.completions.create({
           model,
           temperature: 0.2,
@@ -119,9 +122,7 @@ Return ONLY valid JSON.
 
         const data = JSON.parse(cleaned);
 
-        // For now just log it
         console.log("========= GENERATED TRIP =========");
-        // console.dir(data, { depth: null });
         console.log(JSON.stringify(data, null, 2));
 
         return NextResponse.json(data);
@@ -129,22 +130,32 @@ Return ONLY valid JSON.
         lastError = err;
 
         if (err?.status === 429) {
-          console.log(`${model} rate limited. Trying next...`);
+          retryAfter =
+            err?.error?.metadata?.retry_after_seconds ??
+            Number(err?.headers?.get?.("retry-after")) ??
+            30;
+
+          console.log(
+            `${model} rate limited. Retry after ${retryAfter} seconds.`
+          );
+
           continue;
         }
 
+        console.error(`${model} failed:`, err);
         break;
       }
     }
 
-    console.error(lastError);
+    console.error("All models failed:", lastError);
 
     return NextResponse.json(
       {
-        error: "Unable to generate trip. Please try again.",
+        error: "AI provider is temporarily rate limited.",
+        retryAfter,
       },
       {
-        status: 500,
+        status: 429,
       }
     );
   } catch (error) {

@@ -9,11 +9,8 @@ import { UserDetailContext } from './context/userDetailContext';
 import { TripContextType, TripDetailContext } from './context/tripDetailContext';
 import { TypeTrip } from './create-new-trip/_components/chatbox';
 
-const Provider = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const Provider = ({children,}: 
+  Readonly<{children: React.ReactNode;}>) => {
 
   const addUser = useMutation(api.user.createUser);
   const { user } = useUser();
