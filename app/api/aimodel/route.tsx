@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { aj } from "../arcjet/route";
+import { currentUser } from "@clerk/nextjs/server";
 
 const STEPS = [
   {
@@ -11,11 +13,13 @@ const STEPS = [
   },
   {
     ui: "groupSize",
-    question: "How many people will be traveling with you? (e.g., Solo, Couple, Family, Friends)",
+    question:
+      "How many people will be traveling with you? (e.g., Solo, Couple, Family, Friends)",
   },
   {
     ui: "budget",
-    question: "What budget level are you aiming for? (Low, Medium, High)",
+    question:
+      "What budget level are you aiming for? (Low, Medium, High)",
   },
   {
     ui: "TripDuration",
@@ -34,6 +38,9 @@ const STEPS = [
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await currentUser();
+
+    // Get messages first
     const { messages } = await req.json();
 
     const userMessages = messages.filter(
@@ -41,6 +48,28 @@ export async function POST(req: NextRequest) {
     );
 
     const totalAnswers = userMessages.length;
+
+    // Check if all questions have been answered
+    const isFinal = totalAnswers >= STEPS.length;
+
+    if (isFinal) {
+      const decision = await aj.protect(req, {
+        userId: user?.primaryEmailAddress?.emailAddress ?? "",
+        requested: 5,
+      });
+
+      console.log(decision);
+
+      if (decision.isDenied()) {
+        return NextResponse.json(
+          {
+            error: "No Free credits left",
+            ui: "limit",
+          },
+          { status: 429 }
+        );
+      }
+    }
 
     // Still asking questions
     if (totalAnswers < STEPS.length) {

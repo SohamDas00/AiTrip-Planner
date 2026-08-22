@@ -34,37 +34,37 @@ export type TypeTrip = {
 }
 
 export type Hotel = {
-  description: string;
-  geo_coordinates: {
-    latitude:number,
-    longitude:number,
-  };
-  hotel_address: string;
-  hotel_image_url: string;
-  hotel_name: string;
-  price_per_night: string;
-  rating: number;
+    description: string;
+    geo_coordinates: {
+        latitude: number,
+        longitude: number,
+    };
+    hotel_address: string;
+    hotel_image_url: string;
+    hotel_name: string;
+    price_per_night: string;
+    rating: number;
 };
 
 export type Activity = {
-  best_time_to_visit: string;
-  geo_coordinates: {
-    latitude:number,
-    longitude:number,
-  };
-  place_address: string;
-  place_details: string;
-  place_image_url: string;
-  place_name: string;
-  ticket_pricing: string;
-  time_travel_each_location: string;
+    best_time_to_visit: string;
+    geo_coordinates: {
+        latitude: number,
+        longitude: number,
+    };
+    place_address: string;
+    place_details: string;
+    place_image_url: string;
+    place_name: string;
+    ticket_pricing: string;
+    time_travel_each_location: string;
 };
 
 export type ItineraryDay = {
-  activities: Activity[];
-  best_time_to_visit_day: string;
-  day: number;
-  day_plan: string;
+    activities: Activity[];
+    best_time_to_visit_day: string;
+    day: number;
+    day_plan: string;
 };
 
 
@@ -73,7 +73,7 @@ const Chatbox = () => {
     const [userInput, setUserInput] = useState<string>();
     const [loading, setLoading] = useState(false);
     const [tripDetails, setTripDetails] = useState<TypeTrip>();
-    const [tripGenerated,setTripGenerated]=useState(false);
+    const [tripGenerated, setTripGenerated] = useState(false);
     const { setTripDetailInfo } = useTripDetail();
     const { user } = useUser();
     const currentUser = useQuery(
@@ -113,8 +113,8 @@ const Chatbox = () => {
             setMessages(newMessages);
 
             // If all questions are completed
-            if (result.data.ui === "Final" ) {
-                if(tripGenerated) return ;
+            if (result.data.ui === "Final") {
+                if (tripGenerated) return;
                 setTripGenerated(true);
 
                 const tripResult = await axios.post(
@@ -127,9 +127,9 @@ const Chatbox = () => {
                 console.log(tripResult.data);
 
                 setTripDetails(tripResult?.data?.trip_plan)
-                
+
                 setTripDetailInfo(tripResult?.data?.trip_plan)
-                
+
                 if (!currentUser) {
                     console.log("Current user not loaded");
                     return;
@@ -142,11 +142,28 @@ const Chatbox = () => {
                     uid: currentUser._id,
                 })
             }
-        } catch (err) {
+        } catch (err: any) {
+            if (axios.isAxiosError(err) && err.response?.status === 429) {
+                setMessages([
+                    ...updatedMessages,
+                    {
+                        role: "assistant",
+                        content: err.response.data?.error ?? "No free credits left.",
+                        ui: err.response.data?.ui ?? "limit",
+                    },
+                ]);
+                return;
+            }
+
             setMessages([
                 ...updatedMessages,
-                { role: "assistant", content: "Something went wrong. Please try again.", ui: "error" },
+                {
+                    role: "assistant",
+                    content: "Something went wrong. Please try again.",
+                    ui: "error",
+                },
             ]);
+
             console.error(err);
         } finally {
             setLoading(false);
@@ -165,6 +182,13 @@ const Chatbox = () => {
         }
         else if (ui == 'Final') {
             return <Final disabled={!tripDetails} />
+        }
+        else if (ui === "limit") {
+            return (
+                <div className="mt-2 text-red-600 font-medium">
+                    You have used all your free trip credits. Please try again after 24 hours.
+                </div>
+            );
         }
         return null;
     }
@@ -199,11 +223,11 @@ const Chatbox = () => {
             <section className=''>
                 <div className='border h-20 shadow rounded-3xl p-2 relative'>
                     <Textarea
-                    disabled={loading || tripGenerated}
+                        disabled={loading || tripGenerated}
                         placeholder="Typing..."
                         className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none '
                         value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-                    <Button size={'icon'} disabled={loading ||tripGenerated} className='absolute bottom-4 right-4' onClick={() => onSend()}>
+                    <Button size={'icon'} disabled={loading || tripGenerated} className='absolute bottom-4 right-4' onClick={() => onSend()}>
                         <Send />
                     </Button>
                 </div>

@@ -91,8 +91,9 @@ Return ONLY valid JSON.
 `;
 
     const models = [
+      "openrouter/free",
       "google/gemma-4-31b-it:free",
-      "openai/gpt-oss-20b:free",
+      "nvidia/nemotron-3-super-120b-a12b:free",
     ];
 
     let lastError: any = null;
