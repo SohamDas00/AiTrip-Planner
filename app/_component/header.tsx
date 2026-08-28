@@ -1,7 +1,10 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { SignIn, SignInButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
 
@@ -21,6 +24,8 @@ const Header = () => {
   ]
 
   const { user } = useUser();
+  const pathName = usePathname();
+  const myTrip = pathName === '/create-new-trip'
 
   return (
     <div className='flex justify-between p-5'>
@@ -28,7 +33,7 @@ const Header = () => {
       <Link href={'/'}>
         <div className='flex  gap-2 items-center'>
           <Image src='logo.svg' alt='logo' width={30} height={30} />
-          <h2 className='font-bold text-2xl'>Ai Trip Planner</h2>
+          <h2 className='font-bold text-2xl'>TripGenie</h2>
         </div>
       </Link>
 
@@ -47,9 +52,17 @@ const Header = () => {
         <SignInButton mode='modal'>
           <Button>Get Started</Button>
         </SignInButton>
-      ) : (
-        <Link href='/create-new-trip'><Button>Create new Trip</Button></Link>
-      )}
+      ) :
+        myTrip ? (
+          <Link href='/my-trip'>
+            <Button>My Trips</Button>
+          </Link>
+        ) : (
+          <Link href='/create-new-trip'>
+            <Button>Create new Trip</Button>
+          </Link>
+        )
+      }
     </div>
   )
 }
