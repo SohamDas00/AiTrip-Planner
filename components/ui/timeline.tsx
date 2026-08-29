@@ -8,6 +8,7 @@ import {
   useTransform,
   motion,
 } from "motion/react";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 interface TimelineEntry {
@@ -60,10 +61,13 @@ export const Timeline = ({
     [0, 1]
   );
 
+  const pathname = usePathname();
+  const isCreateNewTrip = pathname === "/create-new-trip";
+
   return (
     <div ref={containerRef} className="w-full">
       {/* Header */}
-      <div className="mb-10">
+      <div className={`mb-10 ${isCreateNewTrip ? "ml-0" : "ml-20"}`}>
         <h2 className="mb-5 max-w-4xl text-2xl text-black dark:text-white md:text-4xl">
           Your trip Itinerary to{" "}
           <strong className="text-primary">

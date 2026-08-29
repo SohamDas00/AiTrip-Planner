@@ -13,7 +13,7 @@ import { TripContextType } from '@/app/context/tripDetailContext';
 import { TypeTrip } from './chatbox';
 
 const Itinerary = () => {
-  const { tripDetailInfo } = useTripDetail();
+  const { tripDetailInfo,setTripDetailInfo } = useTripDetail();
 
   const [tripData, setTripData] = useState<TypeTrip | null>(null);
 
