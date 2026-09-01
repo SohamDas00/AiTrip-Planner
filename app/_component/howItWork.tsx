@@ -22,7 +22,7 @@ export function HowItWorks() {
     return (
         <div className='w-full py-16'>
             <div className='max-w-5xl mx-auto px-4'>
-                <h2 className='text-xl md:text-3xl font-bold text-center mb-12'>Plan your trip in 3 steps</h2>
+                <h2 className='text-xl md:text-3xl font-bold text-center mb-12'>See how it works...</h2>
                 <div className='grid md:grid-cols-3 gap-8'>
                     {steps.map((step, index) => (
                         <div key={step.title} className='relative border rounded-2xl p-6 text-center flex flex-col items-center gap-3'>

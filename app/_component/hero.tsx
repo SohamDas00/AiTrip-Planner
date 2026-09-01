@@ -66,15 +66,15 @@ const Hero = () => {
                         </div>
                     )}
                 </div>
-                <h2 className='my-7 mt-14 gap-2'>Not sure where to start? <strong>See how its works..</strong></h2>
+                {/* <h2 className='my-7 mt-14 gap-2'>Not sure where to start? <strong>See how its works..</strong></h2> */}
                 {/* video */}
-                <HeroVideoDialog
+                {/* <HeroVideoDialog
                     className="block dark:hidden"
                     animationStyle="from-center"
                     videoSrc="https://www.example.com/dummy-video"
                     thumbnailSrc="https://mma.prnewswire.com/media/2401528/1_MindtripProduct.jpg?p=facebook"
                     thumbnailAlt="Dummy Video Thumbnail"
-                />
+                /> */}
 
             </div>
         </div>
