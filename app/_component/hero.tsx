@@ -40,29 +40,29 @@ const Hero = () => {
     }
 
     return (
-        <div className='mt-24 w-full flex justify-center'>
+        <div className='mt-12 md:mt-24 w-full flex justify-center px-4'>
             {/* content */}
-            <div className='max-w-3xl w-full text-center space-y-6'>
-                <h1 className='text-xl md:text-5xl font-bold'>Hey, I'm your personal<span className='text-primary'> trip planner</span></h1>
-                <p className='text-gray-500 text-lg'>Tell me what you want, and I'll handle the rest: flight, hotel, itineraries - all in seconds </p>
+            <div className='max-w-3xl w-full text-center space-y-4 md:space-y-6'>
+                <h1 className='text-2xl md:text-5xl font-bold'>Hey, I'm your personal<span className='text-primary'> trip planner</span></h1>
+                <p className='text-gray-500 text-sm md:text-lg'>Tell me what you want, and I'll handle the rest: flight, hotel, itineraries - all in seconds </p>
 
                 {/* search */}
                 <div>
-                    <div className='border h-28 shadow rounded-3xl p-2 relative'>
+                    <div className='border h-24 md:h-28 shadow rounded-3xl p-2 relative'>
                         <Textarea
                             placeholder="Create a trip to Paris from New York"
-                            className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none ' />
-                        <Button size={'icon'} className='absolute bottom-4 right-4' onClick={() => onSend()}>
-                            <Send />
+                            className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none text-sm md:text-base' />
+                        <Button size={'icon'} className='absolute bottom-3 right-3 md:bottom-4 md:right-4 h-8 w-8 md:h-10 md:w-10' onClick={() => onSend()}>
+                            <Send className='h-4 w-4 md:h-5 md:w-5' />
                         </Button>
                     </div>
                 </div>
                 {/* suggestion */}
-                <div className='flex justify-around'>
+                <div className='flex flex-wrap justify-center gap-2 md:justify-around md:gap-0'>
                     {suggestion.map((trip, index) =>
                         <div key={index} className='flex gap-2 items-center border p-2 rounded-2xl cursor-pointer'>
                             {trip.icon}
-                            <h1 className='text-sm text-black hover:scale-105 transition-all hover:text-primary'>{trip.title}</h1>
+                            <h1 className='text-xs md:text-sm text-black hover:scale-105 transition-all hover:text-primary'>{trip.title}</h1>
                         </div>
                     )}
                 </div>

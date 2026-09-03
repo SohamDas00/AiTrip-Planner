@@ -67,8 +67,8 @@ export const Timeline = ({
   return (
     <div ref={containerRef} className="w-full">
       {/* Header */}
-      <div className={`mb-10 ${isCreateNewTrip ? "ml-0" : "ml-20"}`}>
-        <h2 className="mb-5 max-w-4xl text-2xl text-black dark:text-white md:text-4xl">
+      <div className={`mb-6 md:mb-10 ${isCreateNewTrip ? "ml-0" : "ml-0 md:ml-20"}`}>
+        <h2 className="mb-3 md:mb-5 max-w-4xl text-xl text-black dark:text-white md:text-4xl">
           Your trip Itinerary to{" "}
           <strong className="text-primary">
             {tripData.destination}
@@ -76,19 +76,19 @@ export const Timeline = ({
           is Ready
         </h2>
 
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap gap-3 md:gap-6 text-sm md:text-base">
           <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
+            <Calendar className="h-4 w-4 md:h-5 md:w-5" />
             <span>{tripData.duration}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <Wallet className="h-5 w-5" />
+            <Wallet className="h-4 w-4 md:h-5 md:w-5" />
             <span>{tripData.budget}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5" />
+            <Users className="h-4 w-4 md:h-5 md:w-5" />
             <span>{tripData.group_size}</span>
           </div>
         </div>
@@ -122,7 +122,7 @@ export const Timeline = ({
             {/* RIGHT SIDE */}
             <div className="relative w-full min-w-0 md:w-[75%]">
               {/* Mobile title */}
-              <h3 className="mb-4 block text-left text-2xl font-bold text-neutral-500 md:hidden">
+              <h3 className="mb-3 md:mb-4 block text-left text-lg font-bold text-neutral-500 md:hidden">
                 {item.title}
               </h3>
 

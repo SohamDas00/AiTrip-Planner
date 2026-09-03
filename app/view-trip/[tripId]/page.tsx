@@ -9,20 +9,20 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const ViewTrip = () => {
-    const { tripId }=useParams();
+    const { tripId } = useParams();
     const { userDetails, setUserDetails } = useUserDetail();
-    const [tripData,setTripData]=useState<Trip>()
-    const { tripDetailInfo,setTripDetailInfo } = useTripDetail();
-    const convex=useConvex();
-    
-    useEffect(()=>{
-        userDetails&&getTrip()
-    },[userDetails])
+    const [tripData, setTripData] = useState<Trip>()
+    const { tripDetailInfo, setTripDetailInfo } = useTripDetail();
+    const convex = useConvex();
 
-    const getTrip=async()=>{
-        const result=await convex.query(api.tripDetails.getTripId,{
-            uid:userDetails?._id,
-            tripId:tripId+'',
+    useEffect(() => {
+        userDetails && getTrip()
+    }, [userDetails])
+
+    const getTrip = async () => {
+        const result = await convex.query(api.tripDetails.getTripId, {
+            uid: userDetails?._id,
+            tripId: tripId + '',
         })
         console.log(result);
         setTripData(result);
@@ -30,10 +30,10 @@ const ViewTrip = () => {
     }
 
     return (
-    <div>
-        <Itinerary/>
-    </div>
-  )
+        <div className='p-4 md:p-10'>
+            <Itinerary />
+        </div>
+    )
 }
 
 export default ViewTrip

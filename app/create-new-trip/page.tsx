@@ -5,7 +5,7 @@ import Itinerary from './_components/itinerary'
 const CreateNewTrip = async () => {
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 p-4 md:p-10">
       <div>
         <Chatbox />
       </div>

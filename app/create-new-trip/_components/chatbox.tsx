@@ -193,21 +193,21 @@ const Chatbox = () => {
         return null;
     }
 
-    return (
-        <div className='h-[75vh] flex flex-col border shadow rounded-2xl p-3'>
+        return (
+        <div className='h-[70vh] md:h-[75vh] flex flex-col border shadow rounded-2xl p-2 md:p-3'>
             {/* display message */}
-            <section className='flex-1 overflow-y-auto p-4'>
+            <section className='flex-1 overflow-y-auto p-2 md:p-4'>
                 {messages.length == 0 && <EmptyBox onSelectOption={(value: string) => setUserInput(value)} />}
                 {messages.map((msg: TypeMessage, index) => (
                     msg.role == 'user' ?
                         <div className='flex justify-end mt-2' key={index}>
-                            <div className='max-w-lg bg-primary text-white px-4 py-2 rounded-lg'>
+                            <div className='max-w-[85%] md:max-w-lg bg-primary text-white px-3 py-2 md:px-4 rounded-lg text-sm md:text-base'>
                                 {msg.content}
                             </div>
                         </div>
                         :
                         <div className='flex justify-start mt-2' key={index}>
-                            <div className='max-w-lg bg-gray-300 text-black px-4 py-2 rounded-lg'>
+                            <div className='max-w-[85%] md:max-w-lg bg-gray-300 text-black px-3 py-2 md:px-4 rounded-lg text-sm md:text-base'>
                                 {msg.content}
                                 {generateUI(msg.ui ?? '')}
 
@@ -215,20 +215,20 @@ const Chatbox = () => {
                         </div>
                 ))}
                 {loading && <div className='flex justify-start mt-2'>
-                    <div className='max-w-lg bg-gray-300 text-black px-4 py-2 rounded-lg'>
-                        <Loader className='animate-spin text-primary' />
+                    <div className='max-w-[85%] md:max-w-lg bg-gray-300 text-black px-3 py-2 md:px-4 rounded-lg'>
+                        <Loader className='animate-spin text-primary h-4 w-4 md:h-5 md:w-5' />
                     </div>
                 </div>}
             </section>
             <section className=''>
-                <div className='border h-20 shadow rounded-3xl p-2 relative'>
+                <div className='border h-16 md:h-20 shadow rounded-3xl p-2 relative'>
                     <Textarea
                         disabled={loading || tripGenerated}
                         placeholder="Typing..."
-                        className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none '
+                        className='w-full bg-transparent border-none resize-none focus-visible:ring-0 shadow-none text-sm md:text-base'
                         value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-                    <Button size={'icon'} disabled={loading || tripGenerated} className='absolute bottom-4 right-4' onClick={() => onSend()}>
-                        <Send />
+                    <Button size={'icon'} disabled={loading || tripGenerated} className='absolute bottom-3 right-3 md:bottom-4 md:right-4 h-8 w-8 md:h-10 md:w-10' onClick={() => onSend()}>
+                        <Send className='h-4 w-4 md:h-5 md:w-5' />
                     </Button>
                 </div>
             </section>

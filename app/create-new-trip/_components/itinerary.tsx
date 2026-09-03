@@ -13,7 +13,7 @@ import { TripContextType } from '@/app/context/tripDetailContext';
 import { TypeTrip } from './chatbox';
 
 const Itinerary = () => {
-  const { tripDetailInfo,setTripDetailInfo } = useTripDetail();
+  const { tripDetailInfo, setTripDetailInfo } = useTripDetail();
 
   const [tripData, setTripData] = useState<TypeTrip | null>(null);
 
@@ -44,14 +44,14 @@ const Itinerary = () => {
     : [];
 
   return (
-    <div className="relative w-full h-[75vh] overflow-auto">
+    <div className="relative w-full h-[70vh] md:h-[75vh] overflow-auto">
       {tripData ?
         <Timeline
           data={data}
           tripData={tripData}
         />
         :
-        <div className="relative w-full h-[75vh]">
+        <div className="relative w-full h-[70vh] md:h-[75vh]">
           <Image
             src="/travel.png"
             alt="travel image"
@@ -59,8 +59,8 @@ const Itinerary = () => {
             height={800}
             className="rounded-3xl w-full h-full object-cover"
           />
-          <h2 className="absolute bottom-5 left-5 text-white font-bold text-2xl flex gap-2 transition-transform duration-300 ease-out hover:scale-105 cursor-pointer">
-            <ArrowLeft /> Getting to know you to build perfect trip here...
+          <h2 className="absolute bottom-3 left-3 md:bottom-5 md:left-5 text-white font-bold text-base md:text-2xl flex gap-2 transition-transform duration-300 ease-out hover:scale-105 cursor-pointer">
+            <ArrowLeft className="h-5 w-5 md:h-6 md:w-6 shrink-0" /> Getting to know you to build perfect trip here...
           </h2>
 
         </div>

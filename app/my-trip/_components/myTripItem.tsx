@@ -9,9 +9,9 @@ type Prop = {
 
 const MyTripItem = ({ trip }: Prop) => {
     return (
-        <Link href={'/view-trip/'+trip.tripId} className="flex flex-col gap-2 border border-gray-200 shadow-md rounded-2xl p-4 transition-all duration-300 hover:shadow-lg bg-white">
+        <Link href={'/view-trip/'+trip.tripId} className="flex flex-col gap-2 border border-gray-200 shadow-md rounded-2xl p-3 md:p-4 transition-all duration-300 hover:shadow-lg bg-white">
             {/* Image Container */}
-            <div className="relative h-48 w-full overflow-hidden rounded-xl">
+            <div className="relative h-40 md:h-48 w-full overflow-hidden rounded-xl">
                 <Image
                     alt='tripImage'
                     src="/placeholder.jpg"
@@ -21,12 +21,12 @@ const MyTripItem = ({ trip }: Prop) => {
             </div>
 
             {/* Destination Title */}
-            <p className="font-bold text-lg text-gray-800 mt-2">
+            <p className="font-bold text-base md:text-lg text-gray-800 mt-2">
                 {trip?.tripDetails?.destination || "Unknown Destination"}
             </p>
 
             {/* Trip Details Subtext */}
-            <p className="text-sm text-gray-500 font-medium">
+            <p className="text-xs md:text-sm text-gray-500 font-medium">
                 {trip?.tripDetails?.duration || "0 Days"} trip with {trip?.tripDetails?.budget || "Budget"} budget
             </p>
         </Link>

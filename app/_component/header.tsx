@@ -28,20 +28,20 @@ const Header = () => {
   const myTrip = pathName === '/create-new-trip'
 
   return (
-    <div className='flex justify-between p-5'>
+    <div className='flex justify-between items-center p-3 sm:p-5 gap-2'>
       {/* logo */}
       <Link href={'/'}>
-        <div className='flex  gap-2 items-center'>
-          <Image src='logo.svg' alt='logo' width={30} height={30} />
-          <h2 className='font-bold text-2xl'>TripGenie</h2>
+        <div className='flex gap-1 sm:gap-2 items-center'>
+          <Image src='logo.svg' alt='logo' width={24} height={24} className='sm:w-[30px] sm:h-[30px]' />
+          <h2 className='font-bold text-lg sm:text-2xl'>TripGenie</h2>
         </div>
       </Link>
 
       {/* middle part */}
-      <div className='flex gap-7 items-center'>
+      <div className='flex gap-3 sm:gap-7 items-center'>
         {itemList.map((item, index) =>
           <Link key={index} href={item.path}>
-            <h2 className='text-lg text-black hover:scale-105 transition-all hover:text-primary'>
+            <h2 className='text-sm sm:text-lg text-black hover:scale-105 transition-all hover:text-primary'>
               {item.name}
             </h2>
           </Link>
@@ -50,16 +50,22 @@ const Header = () => {
 
       {!user ? (
         <SignInButton mode='modal'>
-          <Button>Get Started</Button>
+          <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
+            Get Started
+          </Button>
         </SignInButton>
       ) :
         myTrip ? (
           <Link href='/my-trip'>
-            <Button>My Trips</Button>
+            <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
+              My Trips
+            </Button>
           </Link>
         ) : (
           <Link href='/create-new-trip'>
-            <Button>Create new Trip</Button>
+            <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
+              Create new Trip
+            </Button>
           </Link>
         )
       }

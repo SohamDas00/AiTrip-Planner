@@ -98,6 +98,7 @@ Return ONLY valid JSON.
 
     let lastError: any = null;
     let retryAfter = 30;
+    let wasRateLimited = false;
 
     for (const model of models) {
       try {
@@ -106,22 +107,27 @@ Return ONLY valid JSON.
         const completion = await openai.chat.completions.create({
           model,
           temperature: 0.2,
-          messages: [
-            {
-              role: "user",
-              content: FINAL_PROMPT,
-            },
-          ],
+          messages: [{ role: "user", content: FINAL_PROMPT }],
         });
 
         const content = completion.choices[0].message.content ?? "";
 
+        // Strip code fences AND find the JSON object itself —
+        // handles stray prefixes like "User Safety: safe"
         const cleaned = content
           .replace(/```json/gi, "")
           .replace(/```/g, "")
           .trim();
 
-        const data = JSON.parse(cleaned);
+        const jsonStart = cleaned.indexOf("{");
+        const jsonEnd = cleaned.lastIndexOf("}");
+
+        if (jsonStart === -1 || jsonEnd === -1) {
+          throw new Error(`No JSON object found in response: ${cleaned.slice(0, 100)}`);
+        }
+
+        const jsonOnly = cleaned.slice(jsonStart, jsonEnd + 1);
+        const data = JSON.parse(jsonOnly);
 
         console.log("========= GENERATED TRIP =========");
         console.log(JSON.stringify(data, null, 2));
@@ -131,20 +137,20 @@ Return ONLY valid JSON.
         lastError = err;
 
         if (err?.status === 429) {
+          wasRateLimited = true;
           retryAfter =
             err?.error?.metadata?.retry_after_seconds ??
             Number(err?.headers?.get?.("retry-after")) ??
             30;
 
-          console.log(
-            `${model} rate limited. Retry after ${retryAfter} seconds.`
-          );
-
-          continue;
+          console.log(`${model} rate limited. Retry after ${retryAfter} seconds.`);
+          continue; // try next model
         }
 
-        console.error(`${model} failed:`, err);
-        break;
+        // Non-429 failure (bad JSON, malformed output, etc.) —
+        // still try the next model instead of bailing out
+        console.error(`${model} failed:`, err.message);
+        continue;
       }
     }
 
@@ -152,12 +158,12 @@ Return ONLY valid JSON.
 
     return NextResponse.json(
       {
-        error: "AI provider is temporarily rate limited.",
-        retryAfter,
+        error: wasRateLimited
+          ? "AI provider is temporarily rate limited."
+          : "AI provider returned an invalid response. Please try again.",
+        retryAfter: wasRateLimited ? retryAfter : undefined,
       },
-      {
-        status: 429,
-      }
+      { status: wasRateLimited ? 429 : 502 }
     );
   } catch (error) {
     console.error(error);

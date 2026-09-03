@@ -25,17 +25,17 @@ const features = [
 
 export function Features() {
     return (
-        <div className='w-full py-16'>
+        <div className='w-full py-10 md:py-16'>
             <div className='max-w-5xl mx-auto px-4'>
-                <h2 className='text-xl md:text-3xl font-bold text-center mb-12'>Why plan with us</h2>
-                <div className='grid sm:grid-cols-2 md:grid-cols-4 gap-6'>
+                <h2 className='text-lg md:text-3xl font-bold text-center mb-8 md:mb-12'>Why plan with us</h2>
+                <div className='grid sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6'>
                     {features.map((feature) => (
-                        <div key={feature.title} className='border rounded-2xl p-6 flex flex-col items-center text-center gap-3'>
-                            <div className='h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center'>
+                        <div key={feature.title} className='border rounded-2xl p-4 md:p-6 flex flex-col items-center text-center gap-2 md:gap-3'>
+                            <div className='h-10 w-10 md:h-12 md:w-12 rounded-xl bg-primary/10 flex items-center justify-center'>
                                 {feature.icon}
                             </div>
-                            <h3 className='font-semibold'>{feature.title}</h3>
-                            <p className='text-sm text-gray-500'>{feature.description}</p>
+                            <h3 className='font-semibold text-sm md:text-base'>{feature.title}</h3>
+                            <p className='text-xs md:text-sm text-gray-500'>{feature.description}</p>
                         </div>
                     ))}
                 </div>

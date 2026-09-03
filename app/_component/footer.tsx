@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 export function Footer() {
     return (
-        <footer className='w-full border-t mt-10'>
-            <div className='max-w-5xl mx-auto px-4 py-10 flex flex-col md:flex-row justify-between gap-6'>
+        <footer className='w-full border-t mt-6 md:mt-10'>
+            <div className='max-w-5xl mx-auto px-4 py-6 md:py-10 flex flex-col md:flex-row justify-between gap-6 md:gap-6'>
                 <div>
-                    <h3 className='font-bold text-lg'>Trip<span className='text-primary'>Genie</span></h3>
-                    <p className='text-sm text-gray-500 mt-1 max-w-xs'>Your personal AI trip planner — hotels and itineraries in seconds.</p>
+                    <h3 className='font-bold text-base md:text-lg'>Trip<span className='text-primary'>Genie</span></h3>
+                    <p className='text-xs md:text-sm text-gray-500 mt-1 max-w-xs'>Your personal AI trip planner — hotels and itineraries in seconds.</p>
                 </div>
-                <div className='flex gap-10 text-sm'>
+                <div className='flex gap-6 md:gap-10 text-xs md:text-sm'>
                     <div className='flex flex-col gap-2'>
                         <span className='font-semibold'>Product</span>
                         <Link href='/create-new-trip' className='text-gray-500 hover:text-primary'>Create a trip</Link>
@@ -21,7 +21,7 @@ export function Footer() {
                     </div>
                 </div>
             </div>
-            <div className='text-center text-xs text-gray-400 py-4 border-t'>
+            <div className='text-center text-xs text-gray-400 py-3 md:py-4 border-t'>
                 © {new Date().getFullYear()} TripGenie. All rights reserved.
             </div>
         </footer>
