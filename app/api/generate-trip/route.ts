@@ -112,8 +112,6 @@ Return ONLY valid JSON.
 
         const content = completion.choices[0].message.content ?? "";
 
-        // Strip code fences AND find the JSON object itself —
-        // handles stray prefixes like "User Safety: safe"
         const cleaned = content
           .replace(/```json/gi, "")
           .replace(/```/g, "")
@@ -146,8 +144,7 @@ Return ONLY valid JSON.
           console.log(`${model} rate limited. Retry after ${retryAfter} seconds.`);
           continue; // try next model
         }
-
-        // Non-429 failure (bad JSON, malformed output, etc.) —
+        
         // still try the next model instead of bailing out
         console.error(`${model} failed:`, err.message);
         continue;

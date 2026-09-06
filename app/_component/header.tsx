@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { SignIn, SignInButton, useUser } from '@clerk/nextjs'
+import { SignIn, SignInButton, UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -48,27 +48,30 @@ const Header = () => {
         )}
       </div>
 
-      {!user ? (
-        <SignInButton mode='modal'>
-          <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
-            Get Started
-          </Button>
-        </SignInButton>
-      ) :
-        myTrip ? (
-          <Link href='/my-trip'>
+      <div className='flex gap-2'>
+        {!user ? (
+          <SignInButton mode='modal'>
             <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
-              My Trips
+              Get Started
             </Button>
-          </Link>
-        ) : (
-          <Link href='/create-new-trip'>
-            <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
-              Create new Trip
-            </Button>
-          </Link>
-        )
-      }
+          </SignInButton>
+        ) :
+          myTrip ? (
+            <Link href='/my-trip'>
+              <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
+                My Trips
+              </Button>
+            </Link>
+          ) : (
+            <Link href='/create-new-trip'>
+              <Button size='sm' className='sm:h-10 sm:px-4 sm:text-base text-xs px-2 h-8'>
+                Create new Trip
+              </Button>
+            </Link>
+          )
+        }
+        <UserButton />
+      </div>
     </div>
   )
 }
