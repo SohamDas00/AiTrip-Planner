@@ -144,7 +144,7 @@ Return ONLY valid JSON.
           console.log(`${model} rate limited. Retry after ${retryAfter} seconds.`);
           continue; // try next model
         }
-        
+
         // still try the next model instead of bailing out
         console.error(`${model} failed:`, err.message);
         continue;

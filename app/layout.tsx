@@ -9,8 +9,11 @@ import { ConvexClientProvider } from "./convexClientProvider";
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: "AiTrip Planner",
-  description: "Tell me what you want, and I'll handle the rest: flight, hotel, itineraries - all in seconds",
+  title: "TripGenie",
+  description: "Tell me what you want, and I'll handle the rest: hotel, itineraries - all in seconds",
+  icons:{
+    icon:'/logo.svg',
+  }
 };
 
 const outfit = Outfit({ subsets: ['latin'] })

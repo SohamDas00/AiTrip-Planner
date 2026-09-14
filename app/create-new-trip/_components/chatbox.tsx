@@ -73,7 +73,7 @@ const Chatbox = () => {
     const [userInput, setUserInput] = useState<string>();
     const [loading, setLoading] = useState(false);
     const [tripDetails, setTripDetails] = useState<TypeTrip>();
-    const [tripGenerated, setTripGenerated] = useState(false);
+    const [tripGenerated, setTripGenerated] = useState(false);//prevents repeated generation
     const { setTripDetailInfo } = useTripDetail();
     const { user } = useUser();
     const currentUser = useQuery(
