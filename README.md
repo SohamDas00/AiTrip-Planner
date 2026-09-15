@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✈️ TripGenie — AI Travel Planner
 
-## Getting Started
+> Plan smarter. Travel better.
 
-First, run the development server:
+TripGenie is an AI-powered travel planner that creates personalized trip itineraries based on your destination, budget, trip duration, group size, interests, and preferences.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🌐 **Live Demo:** [https://trip-genie-pi.vercel.app/](https://trip-genie-pi.vercel.app/)
+
+---
+
+## ✨ Features
+
+- 🤖 **AI Trip Planning** — Generate personalized travel plans using AI.
+- 💬 **Conversational Planning** — Answer a few questions step-by-step instead of filling out a long form.
+- 🗺️ **Personalized Itinerary** — Get a day-by-day travel plan with recommended activities.
+- 🏨 **Hotel Recommendations** — View suggested hotels with ratings, prices, locations, and images.
+- 🖼️ **Place Images** — Fetches destination and hotel images using Google Places.
+- 🔐 **User Authentication** — Secure sign-up and login using Clerk.
+- 💾 **Save Trips** — Save generated trips and access them later from My Trips.
+- 🛡️ **API Protection** — Rate limiting with Arcjet to prevent excessive API usage.
+- 📧 **Contact** — Contact form with email delivery using Resend.
+- 📱 **Responsive Design** — Works across desktop and mobile devices.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|---|---|
+| **Frontend** | Next.js, React, TypeScript |
+| **Styling** | Tailwind CSS, shadcn/ui |
+| **Database** | Convex |
+| **Authentication** | Clerk |
+| **AI** | OpenRouter, OpenAI SDK |
+| **Places & Images** | Google Places API |
+| **Security** | Arcjet |
+| **Email** | Resend |
+| **Deployment** | Vercel |
+
+---
+
+## 🚀 How It Works
+
+```text
+User
+  ↓
+Sign In / Sign Up
+  ↓
+Enter Trip Preferences
+  ↓
+AI Generates Trip Plan
+  ↓
+View Hotels & Daily Itinerary
+  ↓
+Save Trip
+  ↓
+Access from My Trips
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💻 Run Locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
 
-## Learn More
+- Node.js 18+
+- npm
+- Git
 
-To learn more about Next.js, take a look at the following resources:
+### Steps
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/SohamDas00/AITrip-Planner.git
+   cd AITrip-Planner
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Start the Development Server**
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ☁️ Deployment
+
+TripGenie is deployed using **Vercel**.
+
+🌐 **Live Demo:** [https://trip-genie-pi.vercel.app/](https://trip-genie-pi.vercel.app/)
+
+The deployment workflow is:
+
+```text
+GitHub
+   ↓
+Vercel
+   ↓
+Next.js Build
+   ↓
+Production Deployment
+```
+
+---
+
+## 👨‍💻 Author
+
+**Soham Das**  
+*B.Tech — Computer Science & Engineering*  
+🔗 **GitHub:** [https://github.com/SohamDas00](https://github.com/SohamDas00)
+
+---
+
+## ⭐ Support
+
+If you like this project, consider giving the repository a ⭐ on GitHub!
+README.md
+Displaying README.md.
