@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { aj } from "../arcjet/route";
 import { currentUser } from "@clerk/nextjs/server";
+import { aj } from "@/lib/arcjet";
 
 const STEPS = [
   {
