@@ -2,6 +2,8 @@
 
 import { TypeTrip } from "@/app/create-new-trip/_components/chatbox";
 import { Calendar, Users, Wallet } from "lucide-react";
+import Image from "next/image";
+import axios from "axios";
 import {
   useMotionValueEvent,
   useScroll,
@@ -26,6 +28,24 @@ export const Timeline = ({
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [destinationPhoto, setDestinationPhoto] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (tripData?.destination) {
+      axios
+        .post("/api/googlePhoto", { placeName: tripData.destination })
+        .then((res) => {
+          if (isMounted && res.data?.photoUrl) {
+            setDestinationPhoto(res.data.photoUrl);
+          }
+        })
+        .catch(() => {});
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [tripData?.destination]);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -66,30 +86,40 @@ export const Timeline = ({
 
   return (
     <div ref={containerRef} className="w-full">
-      {/* Header */}
+      {/* Destination Hero Banner & Header */}
       <div className={`mb-6 md:mb-10 ${isCreateNewTrip ? "ml-0" : "ml-0 md:ml-20"}`}>
-        <h2 className="mb-3 md:mb-5 max-w-4xl text-xl text-black dark:text-white md:text-4xl">
-          Your trip Itinerary to{" "}
-          <strong className="text-primary">
-            {tripData.destination}
-          </strong>{" "}
-          is Ready
-        </h2>
+        <div className="relative w-full h-48 sm:h-56 md:h-64 rounded-3xl overflow-hidden border shadow-sm mb-4 bg-muted">
+          <Image
+            src={destinationPhoto || "/placeholder.jpg"}
+            alt={tripData.destination || "Destination"}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 80vw"
+            className="object-cover"
+            onError={() => setDestinationPhoto("/placeholder.jpg")}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex flex-col justify-end p-5 md:p-7">
+            <span className="text-xs uppercase tracking-wider text-primary font-semibold">Your Custom Itinerary</span>
+            <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-white drop-shadow-sm mt-1">
+              Trip to {tripData.destination}
+            </h2>
 
-        <div className="flex flex-wrap gap-3 md:gap-6 text-sm md:text-base">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 md:h-5 md:w-5" />
-            <span>{tripData.duration}</span>
-          </div>
+            <div className="flex flex-wrap gap-2 sm:gap-4 text-white text-xs sm:text-sm mt-3 font-medium">
+              <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <Calendar className="h-4 w-4 text-primary" />
+                <span>{tripData.duration}</span>
+              </div>
 
-          <div className="flex items-center gap-2">
-            <Wallet className="h-4 w-4 md:h-5 md:w-5" />
-            <span>{tripData.budget}</span>
-          </div>
+              <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <Wallet className="h-4 w-4 text-green-400" />
+                <span>{tripData.budget}</span>
+              </div>
 
-          <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 md:h-5 md:w-5" />
-            <span>{tripData.group_size}</span>
+              <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <Users className="h-4 w-4 text-blue-400" />
+                <span>{tripData.group_size}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

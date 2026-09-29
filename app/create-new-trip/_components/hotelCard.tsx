@@ -17,44 +17,50 @@ type Props = {
 const HotelCard = ({ hotel }: Props) => {
 
     const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        hotel && GooglePhoto();
-    }, [hotel])
+        let isMounted = true;
+        const fetchPhoto = async () => {
+            if (!hotel?.hotel_name) return;
+            try {
+                setIsLoading(true);
+                const result = await axios.post("/api/googlePhoto", {
+                    placeName: `${hotel.hotel_name}, ${hotel.hotel_address || ""}`,
+                });
 
-    const GooglePhoto = async () => {
-    try {
-        const result = await axios.post("/api/googlePhoto", {
-            placeName: `${hotel.hotel_name}, ${hotel.hotel_address}`,
-        });
+                const url = result?.data?.photoUrl;
+                if (isMounted && typeof url === "string" && url.length > 0) {
+                    setPhotoUrl(url);
+                }
+            } catch (error) {
+                console.log("Photo error:", error);
+            } finally {
+                if (isMounted) setIsLoading(false);
+            }
+        };
 
-        console.log("API RESULT:", result.data);
+        fetchPhoto();
 
-        const url = result?.data?.photoUrl;
-
-        if (typeof url === "string" && url.length > 0) {
-            setPhotoUrl(url);
-        } else {
-            setPhotoUrl(undefined);
-        }
-
-    } catch (error) {
-        console.log("Photo error:", error);
-        setPhotoUrl(undefined);
-    }
-};
+        return () => {
+            isMounted = false;
+        };
+    }, [hotel?.hotel_name, hotel?.hotel_address]);
 
     return (
         <div
             className="overflow-hidden rounded-2xl border bg-background shadow-sm transition hover:-translate-y-1 hover:shadow-md"
         >
-            <div className="relative h-52 w-full overflow-hidden">
+            <div className="relative h-52 w-full overflow-hidden bg-muted">
                 <Image
                     src={photoUrl || "/placeholder.jpg"}
                     alt={hotel.hotel_name}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-300 hover:scale-105"
+                    className={`object-cover transition-transform duration-300 hover:scale-105 ${
+                        isLoading ? "opacity-75 blur-xs" : "opacity-100 blur-0"
+                    }`}
+                    onError={() => setPhotoUrl("/placeholder.jpg")}
                 />
             </div>
 
