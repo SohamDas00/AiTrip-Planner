@@ -1,7 +1,7 @@
 $body = @{ textQuery = "Louvre Museum, Paris" } | ConvertTo-Json
 $headers = @{
     "Content-Type" = "application/json"
-    "X-Goog-Api-Key" = "AIzaSyDBpeHsvfDoy51O_zcBVzVCuVtYwP_6Iug"
+    "X-Goog-Api-Key" = process.env.GOOGLE_PLACE_KEY
     "X-Goog-FieldMask" = "places.id,places.displayName,places.photos"
 }
 $res = Invoke-RestMethod -Uri "https://places.googleapis.com/v1/places:searchText" -Method Post -Headers $headers -Body $body
